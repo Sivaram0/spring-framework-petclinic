@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
     <artifactId>spring-framework-petclinic</artifactId>
-    <version>6.0.15</version>
+    <version>6.1.2</version>
 
     <name>Spring Framework Petclinic</name>
     <packaging>war</packaging>
@@ -20,6 +20,10 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
+        <!-- SonarQube configuration -->
+        <sonar.organization>spring-petclinic</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
         <!-- Spring -->
         <!-- For framework compatibility, refer to the Spring Boot Dependencies BOM and to the gradle.properties -->
         <!-- https://github.com/spring-projects/spring-boot/blob/main/spring-boot-project/spring-boot-dependencies/build.gradle -->
@@ -27,7 +31,7 @@
         <spring-framework.version>6.1.2</spring-framework.version>
 
         <!-- Web dependencies -->
-        <webjars-bootstrap.version>5.3.2</webjars-bootstrap.version>
+        <webjars-bootstrap.version>5.3.2</webjars-bootstrap.version> <!-- Report bootstrap version to the footer.tag -->
         <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
         <webjars-flatpickr.version>4.6.13</webjars-flatpickr.version>
 
@@ -55,7 +59,7 @@
 
         <!-- Test -->
         <assertj.version>3.24.2</assertj.version>
-        <json-path.version>2.8.0</json-path.version>
+        <json-path.version>2.9.0</json-path.version>
         <mockito.version>5.8.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
@@ -425,6 +429,7 @@
                 <version>${jacoco-maven-plugin}</version>
                 <executions>
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -435,6 +440,11 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <formats>
+                                <format>XML</format>
+                            </formats>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -460,7 +470,14 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${docker.jib-maven-plugin.version}</version>
+                <!-- See https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin -->
                 <configuration>
+                    <from>
+                        <image>jetty:11.0-jdk17</image>
+                    </from>
+                    <container>
+                        <entrypoint>java,-jar,/usr/local/jetty/start.jar</entrypoint>
+                    </container>
                     <to>
                         <image>docker.io/${docker.image.prefix}/${project.artifactId}</image>
                         <tags>
