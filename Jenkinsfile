@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Checkout the code from Git
-                git 'https://github.com/Sivaram0/spring-framework-petclinic.git'
+                git branch: 'main', url: 'https://github.com/Sivaram0/spring-framework-petclinic.git'
 
                 // Build the Java project
                 sh 'mvn clean package'
