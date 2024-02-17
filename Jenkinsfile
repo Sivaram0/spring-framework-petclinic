@@ -35,5 +35,26 @@ pipeline {
                 }
             }
         }
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh 'docker build -t springpetclinic .'
+                        sh 'docker tag springpetclinic sivaramaprasad/springpetclinic:latest '
+                        sh 'docker push sivaramaprasad/springpetclinic:latest '
+                    }
+                }
+            }
+        }
+        stage('TRIVY') {
+            steps {
+                sh 'trivy image sivaramaprasad/springpetclinic:latest > trivyimage.txt'
+            }
+        }
+        stage('Deploy to container') {
+            steps {
+                sh 'docker run -d --name spring -p 8081:80 springpetclinic:latest'
+            }
+        }
     }
 }
