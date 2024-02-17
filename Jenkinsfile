@@ -35,6 +35,9 @@ pipeline {
                 }
             }
         }
+        stage('archive the artifacts') {
+            archiveArtifacts archive: 'target/*.jar', onlyIfSuccessful: true
+        }
         stage('Docker Build & Push') {
             steps {
                 script {
