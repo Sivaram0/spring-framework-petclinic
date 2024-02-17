@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     tools {
@@ -6,7 +5,7 @@ pipeline {
         maven 'maven'
     }
     environment {
-        SCANNER_HOME = tool 'sonar-scanner'
+        SCANNER_HOME = tool 'SonarScanner'
     }
     stages {
         stage('clean workspace') {
@@ -19,62 +18,22 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Sivaram0/spring-framework-petclinic.git'
             }
         }
-        stage('Sonarqube Analysis ') {
+        stage('Maven') {
             steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Netflix \
-                    -Dsonar.projectKey=Netflix '''
-                }
-            }
-        }
-        stage('quality gate') {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
-                }
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
+                tool 'maven'
                 sh 'mvn clean package'
             }
         }
-        stage('Test') {
+        stage('SonarQube Analysis') {
             steps {
-                sh 'mvn test'
+                withSonarQubeEnv('sonar-server') {
+                    sh "${SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectName=spring-framework-petclinic \
+                        -Dsonar.projectKey=spring-framework-petclinic \
+                        -Dsonar.sources=src/main/java \
+                        -Dsonar.java.binaries=target/classes"
+                }
             }
         }
-        stage('OWASP FS SCAN') {
-            steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
-        stage('TRIVY FS SCAN') {
-            steps {
-                sh 'trivy fs . > trivyfs.txt'
-            }
-        }
-        // stage('Docker Build & Push') {
-        //     steps {
-        //         script {
-        //             withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-        //                 sh 'docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix .'
-        //                 sh 'docker tag netflix nasi101/netflix:latest '
-        //                 sh 'docker push nasi101/netflix:latest '
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('TRIVY') {
-        //     steps {
-        //         sh 'trivy image nasi101/netflix:latest > trivyimage.txt'
-        //     }
-        // }
-        // stage('Deploy to container') {
-        //     steps {
-        //         sh 'docker run -d --name netflix -p 8081:80 nasi101/netflix:latest'
-        //     }
-        // }
     }
 }
