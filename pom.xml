@@ -12,15 +12,6 @@
     <url>https://spring-petclinic.github.io/</url>
 
     <properties>
-
-<distributionManagement>
-    <snapshotRepository>
-        <id>snapshots</id>
-        <name>a0b250rjtcoq9-artifactory-primary-0-snapshots</name>
-        <url>https://hudsonartifactory.jfrog.io/artifactory/neil-libs-snapshot</url>
-    </snapshotRepository>
-</distributionManagement>
-
         <!-- Generic properties -->
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
