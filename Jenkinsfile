@@ -60,7 +60,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
                         sh 'docker build -t spring .'
-                        sh 'docker tag netflix sivaramaprasad/spring:latest '
+                        sh 'docker tag spring sivaramaprasad/spring:latest '
                         sh 'docker push sivaramaprasaditrajula/spring:latest '
                     }
                 }
