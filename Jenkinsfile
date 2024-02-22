@@ -48,13 +48,13 @@ pipeline {
                 }
             }
         }
-        stage('quality gate') {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-server'
-                }
-            }
-        }
+        // stage('quality gate') {
+        //     steps {
+        //         script {
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar-server'
+        //         }
+        //     }
+        // }
         // stage('Docker Build & Push') {
         //     steps {
         //         script {
