@@ -7,8 +7,9 @@ pipeline {
     tools {
         jdk 'jdk17'
         maven 'maven'
-        SCANNER_HOME = tool 'sonar-scanner' // Use the correct tool name for SonarQube scanner
-    // Ensure that 'trivy' is installed and available in the PATH for the following stages
+    }
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
     }
     stages {
         stage('Clean Workspace') {
