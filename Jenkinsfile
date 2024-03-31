@@ -34,7 +34,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar') {
+                withSonarQubeEnv('sonar-scanner') {
                     sh '''$SCANNER_HOME/bin/sonar-scanner \
                     -Dsonar.projectName=spring \
                     -Dsonar.projectKey=spring'''
