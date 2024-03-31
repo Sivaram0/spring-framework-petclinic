@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-        stage('TRIVY') {
+        stage('TRIVYfs') {
             steps {
                 sh 'trivy fs . > trivyfs.txt'
             }
