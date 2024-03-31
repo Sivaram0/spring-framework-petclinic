@@ -47,7 +47,7 @@ pipeline {
         }
         stage('TRIVY FS SCAN') {
             steps {
-                sh 'trivy fs /path/to/your/war/file.war'
+                sh 'trivy fs home/sivak/workspace/spring-petclinic/*.war'
             }
         }
         stage('Docker Build & Push') {
