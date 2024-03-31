@@ -64,7 +64,7 @@ pipeline {
         }
         stage('Deploy to Container') {
             steps {
-                sh 'docker run -d --name springpetclinic -p 8087:80 sivaramaprasaditrajula/springfixer:latest'
+                sh 'docker run -d --name springpetclinic -p 8090:80 sivaramaprasaditrajula/springfixer:latest'
             }
         }
     }

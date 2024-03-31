@@ -1,5 +1,5 @@
 FROM amazoncorretto:17-alpine-jdk
 
-EXPOSE 8080
+EXPOSE 8090
 # make this non root
-CMD [ "java", "-jar", "/spring-petclinic-3.2.0-SNAPSHOT.jar" ]
+CMD [ "java", "-jar", "petclinic.war" ]
