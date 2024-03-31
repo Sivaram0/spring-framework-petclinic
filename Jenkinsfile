@@ -25,7 +25,6 @@ pipeline {
         stage('Build and Package') {
             steps {
                 sh 'mvn clean install'
-                sh 'split -b 10M /home/sivak/workspace/spring-petclinic/target/petclinic.war part'
             }
         }
         stage('Reporting') {
