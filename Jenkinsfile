@@ -45,6 +45,7 @@ pipeline {
                 }
             }
         }
+
         stage('Docker Build & Push') {
             steps {
                 script {
@@ -59,7 +60,8 @@ pipeline {
         }
         stage('TRIVY') {
             steps {
-               sh 'trivy fs . > trivyfs.txt'
+                sh 'trivy fs . > trivyfs.txt'
+                sh 'trivy image sivaramaprasaditrajula/springfixer:latest > trivyimage.txt'
             }
         }
         stage('Deploy to Container') {
