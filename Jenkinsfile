@@ -59,7 +59,7 @@ pipeline {
         }
         stage('TRIVY') {
             steps {
-                sh 'trivy image sivaramaprasaditrajula/springfixer:latest > trivyimage.txt'
+               sh 'trivy fs . > trivyfs.txt'
             }
         }
         stage('Deploy to Container') {
