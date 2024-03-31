@@ -39,11 +39,13 @@ pipeline {
                         sh '''$SCANNER_HOME/bin/sonar-scanner \
                 -Dsonar.projectName=spring \
                 -Dsonar.projectKey=spring \
+                -Dsonar.java.binaries=target/classes \
                 -Dsonar.exclusions=**/target/petclinic.war'''
                     }
                 }
             }
         }
+
         stage('TRIVY FS SCAN') {
             steps {
                 sh 'trivy fs . > trivyfs.txt'
