@@ -40,15 +40,14 @@ pipeline {
                 -Dsonar.projectName=spring \
                 -Dsonar.projectKey=spring \
                 -Dsonar.java.binaries=target/classes \
-                -Dsonar.exclusions=**/target/petclinic.war'''
+                -Dsonar.inclusions=**/target/petclinic.war'''
                     }
                 }
             }
         }
-
         stage('TRIVY FS SCAN') {
             steps {
-                sh 'trivy fs . > trivyfs.txt'
+                sh 'trivy fs /path/to/your/war/file.war'
             }
         }
         stage('Docker Build & Push') {
