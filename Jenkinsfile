@@ -45,11 +45,6 @@ pipeline {
                 }
             }
         }
-        stage('TRIVY FS SCAN') {
-            steps {
-                sh 'trivy fs home/sivak/workspace/spring-petclinic/*.war'
-            }
-        }
         stage('Docker Build & Push') {
             steps {
                 script {
