@@ -4,7 +4,15 @@ pipeline {
     agent {
         label 'SONAR'
     }
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+    }
     stages {
+        stage('clean workspace') {
+            steps{
+                cleanWs()
+            }
+        }
         stage('git checkout') {
             steps {
                 script {
