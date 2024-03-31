@@ -35,10 +35,13 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner \
-                    -Dsonar.projectName=spring \
-                    -Dsonar.projectKey=spring'''
+                script {
+                    withSonarQubeEnv('sonar') {
+                        sh '''$SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.projectName=spring \
+                -Dsonar.projectKey=spring \
+                -Dsonar.exclusions=**/target/petclinic.war'''
+                    }
                 }
             }
         }
