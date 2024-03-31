@@ -50,7 +50,7 @@ pipeline {
                 script {
                     /* groovylint-disable-next-line DuplicateStringLiteral, NestedBlockDepth */
                     withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                        sh 'docker build --build-arg TMDB_V3_API_KEY=4b44f3548a8cd7c67f528d7acf819e87 -t springfixer .'
+                        sh 'docker build -t springfixer .'
                         sh 'docker tag springfixer sivaramaprasaditrajula/springfixer:latest'
                         sh 'docker push sivaramaprasaditrajula/springfixer:latest'
                     }
