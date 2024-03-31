@@ -45,7 +45,11 @@ pipeline {
                 }
             }
         }
-
+        stage('TRIVY') {
+            steps {
+                sh 'trivy fs . > trivyfs.txt'
+            }
+        }
         stage('Docker Build & Push') {
             steps {
                 script {
